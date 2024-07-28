@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { TableInterface } from '../interfaces/tableData';
-import { concat, map, Observable } from 'rxjs';
+import { combineLatest, map, merge, mergeMap, Observable } from 'rxjs';
+import { table } from 'node:console';
 
 interface paymentsWithEmails {
   id : string
@@ -20,8 +21,16 @@ export class GetTableDataService {
   fetchTableData() : Observable<TableInterface[]> {
     const tableData$ = this.http.get<TableInterface[]>("http://localhost:3000/TableData");
 
-    const emailData$ = this.http.get<paymentsWithEmails[]>("http://localhost:3000/emails");
+    const emailData$ = this.http.get<paymentsWithEmails[]>("http://localhost:3000/paymentsWithEmails");
 
-    return tableData$;
+    const joinedData$ = combineLatest([tableData$, emailData$]).pipe(
+      map(([tableData, emailData]) => {
+        tableData.map((tableItem, index) => {
+          tableItem.email = emailData[index].email
+        })
+        return tableData
+      })
+    )
+    return joinedData$;
   }
 }

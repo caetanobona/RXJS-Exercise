@@ -26,7 +26,7 @@ import { subscribe } from 'diagnostics_channel';
     class: 'w-full overflow-x-auto',
   },
   template: `
-    <spartan-input-preview hlmInput/>
+    <spartan-input-preview (valueChangedEvent)="onEmailSearch($event)"/>
     <hlm-table class="w-full min-w-[400px]">
       <hlm-caption>A list of your recent invoices.</hlm-caption>
       <hlm-trow>
@@ -66,6 +66,7 @@ export class TablePreviewComponent {
   filteredTableData$: Observable<TableInterface[]> = new Observable<TableInterface[]>;
   private statusFilterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('None');
   private methodFilterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('None');
+  private emailSearchSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(
     private getTableDataService : GetTableDataService
@@ -79,15 +80,17 @@ export class TablePreviewComponent {
     this.filteredTableData$ = combineLatest([
       this.tableData$,
       this.statusFilterSubject.asObservable(),
-      this.methodFilterSubject.asObservable()
+      this.methodFilterSubject.asObservable(),
+      this.emailSearchSubject.asObservable()
     ]).pipe(
       // mapeia todos os dados (tableData) passando os paramêtros dos filtros
-      map(([tableData, statusFilter, methodFilter]) => {
+      map(([tableData, statusFilter, methodFilter, emailSearch]) => {
         // filter para filtrar de acordo com os parâmetros (atualizados conforme evento valueChangedEvent do componente select)
         return tableData.filter(invoice => {
           // invoice só passa pelo filtro se o filtro for "None" ou se o valor do filtro condizer com a devida propriedade do invoice
           return (statusFilter === 'None' || invoice.paymentStatus === statusFilter) &&
-                 (methodFilter === 'None' || invoice.paymentMethod === methodFilter);
+                 (methodFilter === 'None' || invoice.paymentMethod === methodFilter) &&
+                 (emailSearch === '' || invoice.email.toLowerCase().includes(emailSearch.toLowerCase()));
         });
       })
     );
@@ -105,6 +108,10 @@ export class TablePreviewComponent {
     } else if (filterColumn === 'Method') {
       this.methodFilterSubject.next(filterValue);
     }
+  }
+
+  onEmailSearch(searchText : string) : void {
+    this.emailSearchSubject.next(searchText)
   }
 
   // protected _invoices = [

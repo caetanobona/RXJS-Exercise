@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'select-preview',
@@ -21,10 +20,10 @@ import { filter } from 'rxjs';
   `,
 })
 export class SelectPreviewComponent {
+  @Output() valueChangedEvent = new EventEmitter<string[]>()
   @Input() placeholder! : string;
   @Input() filterOptions! : string[];
   @Input() filterColumn! : string
-  @Output() valueChangedEvent = new EventEmitter<string[]>()
   @Input() selectedValue : string = ""; 
 
   select(filterOption : string): void {
