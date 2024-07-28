@@ -1,6 +1,10 @@
-# FilteringAPIData
+# RXJS Exercise
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+
+## Database
+
+The database is contained in the db.json file, use `json-server --watch db.json` to run the database. It will be running on `http://localhost:3000` by default
 
 ## Development server
 
