@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -14,12 +14,10 @@ import { InputPreviewComponent } from './input.component';
 import { GetTableDataService } from '../services/get-table-data.service';
 import { TableInterface } from '../interfaces/tableData';
 import { BehaviorSubject, Observable, filter, map, combineLatest} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'table-preview',
-  providers: [HttpClient],
   standalone: true,
   imports: [HlmTableComponent, HlmTrowComponent, HlmThComponent, HlmTdComponent, HlmCaptionComponent, SelectPreviewComponent, CommonModule, FormsModule, InputPreviewComponent],
   host: {

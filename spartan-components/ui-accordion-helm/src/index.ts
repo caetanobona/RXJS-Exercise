@@ -21,7 +21,11 @@ export const HlmAccordionImports = [
 ] as const;
 
 @NgModule({
-	imports: [...HlmAccordionImports],
+	imports: [HlmAccordionDirective,
+		HlmAccordionItemDirective,
+		HlmAccordionTriggerDirective,
+		HlmAccordionContentDirective,
+		HlmAccordionIconDirective,],
 	exports: [...HlmAccordionImports],
 })
 export class HlmAccordionModule {}

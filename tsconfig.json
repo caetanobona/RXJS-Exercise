@@ -125,6 +125,9 @@
       ],
       "@spartan-ng/ui-helm-helm": [
         ".\\spartan-components/ui-helm-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-formfield-helm": [
+        ".\\spartan-components/ui-formfield-helm/src/index.ts"
       ]
     }
   },
