@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { TableInterface } from '../interfaces/tableData';
-import { combineLatest, map, merge, mergeMap, Observable } from 'rxjs';
-import { table } from 'node:console';
+import { combineLatest, map, Observable } from 'rxjs';
 
 interface paymentsWithEmails {
   id : string
